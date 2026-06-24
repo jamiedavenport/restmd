@@ -26,9 +26,6 @@ powershell -c "irm https://github.com/jamiedavenport/restmd/releases/latest/down
 Update later with `restmd-update`, `brew upgrade`, or by re-running the installer.
 For editor support, also install the language server: `brew install jamiedavenport/tap/restmd-lsp`.
 
-> The install commands work once the first release is published — see
-> [Releasing](#releasing). Until then, build from source below.
-
 ## Quick start
 
 ```sh
