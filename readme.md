@@ -10,6 +10,13 @@ diffable, and executable. See [`spec.md`](./spec.md) for the full design and
 > completion/diagnostics/symbols/hover — see [`editors/`](./editors/README.md)
 > for VS Code, Zed, Neovim, and Helix setup.
 
+## Quick start
+
+```sh
+cargo run -p restmd-cli -- init   # scaffold ./.restmd with an example request
+cargo run -p restmd-cli            # open the TUI on ./.restmd
+```
+
 ## Try the TUI
 
 A runnable playground lives in [`demo/`](./demo/README.md). In two terminals:

@@ -1902,7 +1902,9 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "clap",
+ "restmd-core",
  "restmd-tui",
+ "tempfile",
 ]
 
 [[package]]
