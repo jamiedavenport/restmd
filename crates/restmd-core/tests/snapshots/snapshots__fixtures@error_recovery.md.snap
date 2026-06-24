@@ -1,0 +1,273 @@
+---
+source: crates/restmd-core/tests/snapshots.rs
+expression: parsed
+input_file: crates/restmd-core/tests/fixtures/error_recovery.md
+---
+Parsed {
+    document: Document {
+        frontmatter: Some(
+            Frontmatter {
+                base: Some(
+                    "https://api.example.com",
+                ),
+                openapi: None,
+                environments: {},
+                defaults: {
+                    "Accept": "application/json",
+                },
+                timeout: None,
+                retries: None,
+            },
+        ),
+        requests: [
+            Request {
+                method: Get,
+                target: Template {
+                    parts: [
+                        Literal(
+                            "",
+                        ),
+                    ],
+                    span: Span {
+                        start: 253,
+                        end: 253,
+                    },
+                },
+                headers: [
+                    Header {
+                        name: "Accept",
+                        value: Template {
+                            parts: [
+                                Literal(
+                                    "application/json",
+                                ),
+                            ],
+                            span: Span {
+                                start: 262,
+                                end: 278,
+                            },
+                        },
+                        span: Span {
+                            start: 254,
+                            end: 278,
+                        },
+                    },
+                ],
+                body: None,
+                directives: [
+                    Assert {
+                        assertion: Status {
+                            op: Eq,
+                            code: 200,
+                        },
+                        span: Span {
+                            start: 280,
+                            end: 302,
+                        },
+                    },
+                ],
+                span: Span {
+                    start: 247,
+                    end: 303,
+                },
+                heading_span: Span {
+                    start: 247,
+                    end: 253,
+                },
+            },
+            Request {
+                method: Post,
+                target: Template {
+                    parts: [
+                        Literal(
+                            "/widgets",
+                        ),
+                    ],
+                    span: Span {
+                        start: 312,
+                        end: 320,
+                    },
+                },
+                headers: [
+                    Header {
+                        name: "Content-Type",
+                        value: Template {
+                            parts: [
+                                Literal(
+                                    "application/json",
+                                ),
+                            ],
+                            span: Span {
+                                start: 335,
+                                end: 351,
+                            },
+                        },
+                        span: Span {
+                            start: 321,
+                            end: 351,
+                        },
+                    },
+                ],
+                body: None,
+                directives: [],
+                span: Span {
+                    start: 304,
+                    end: 492,
+                },
+                heading_span: Span {
+                    start: 304,
+                    end: 320,
+                },
+            },
+            Request {
+                method: Get,
+                target: Template {
+                    parts: [
+                        Literal(
+                            "/unterminated",
+                        ),
+                    ],
+                    span: Span {
+                        start: 500,
+                        end: 513,
+                    },
+                },
+                headers: [
+                    Header {
+                        name: "Accept",
+                        value: Template {
+                            parts: [
+                                Literal(
+                                    "application/json",
+                                ),
+                            ],
+                            span: Span {
+                                start: 522,
+                                end: 538,
+                            },
+                        },
+                        span: Span {
+                            start: 514,
+                            end: 538,
+                        },
+                    },
+                ],
+                body: None,
+                directives: [],
+                span: Span {
+                    start: 493,
+                    end: 565,
+                },
+                heading_span: Span {
+                    start: 493,
+                    end: 513,
+                },
+            },
+        ],
+    },
+    errors: [
+        ParseError {
+            kind: MissingPath,
+            span: Span {
+                start: 247,
+                end: 253,
+            },
+        },
+        ParseError {
+            kind: MalformedDirective {
+                directive: "capture",
+                reason: "expected `NAME = <source>`",
+            },
+            span: Span {
+                start: 353,
+                end: 362,
+            },
+        },
+        ParseError {
+            kind: MalformedDirective {
+                directive: "capture",
+                reason: "missing capture name",
+            },
+            span: Span {
+                start: 363,
+                end: 379,
+            },
+        },
+        ParseError {
+            kind: MalformedDirective {
+                directive: "capture",
+                reason: "source must be a `$` JSONPath, `response.headers.NAME`, or `response.status`",
+            },
+            span: Span {
+                start: 380,
+                end: 404,
+            },
+        },
+        ParseError {
+            kind: MalformedDirective {
+                directive: "assert",
+                reason: "left side must be `status` or a `$` JSONPath",
+            },
+            span: Span {
+                start: 405,
+                end: 413,
+            },
+        },
+        ParseError {
+            kind: MalformedDirective {
+                directive: "assert",
+                reason: "status assertion needs a numeric code",
+            },
+            span: Span {
+                start: 414,
+                end: 436,
+            },
+        },
+        ParseError {
+            kind: MalformedDirective {
+                directive: "assert",
+                reason: "unknown operator in body assertion",
+            },
+            span: Span {
+                start: 437,
+                end: 454,
+            },
+        },
+        ParseError {
+            kind: UnknownDirective(
+                "teardown",
+            ),
+            span: Span {
+                start: 455,
+                end: 475,
+            },
+        },
+        ParseError {
+            kind: MalformedDirective {
+                directive: "set",
+                reason: "expected `NAME = VALUE`",
+            },
+            span: Span {
+                start: 476,
+                end: 481,
+            },
+        },
+        ParseError {
+            kind: MalformedDirective {
+                directive: "set",
+                reason: "missing variable name",
+            },
+            span: Span {
+                start: 482,
+                end: 491,
+            },
+        },
+        ParseError {
+            kind: UnterminatedFence,
+            span: Span {
+                start: 540,
+                end: 565,
+            },
+        },
+    ],
+}

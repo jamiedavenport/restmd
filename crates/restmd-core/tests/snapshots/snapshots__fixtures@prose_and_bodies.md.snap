@@ -1,0 +1,155 @@
+---
+source: crates/restmd-core/tests/snapshots.rs
+expression: parsed
+input_file: crates/restmd-core/tests/fixtures/prose_and_bodies.md
+---
+Parsed {
+    document: Document {
+        frontmatter: None,
+        requests: [
+            Request {
+                method: Post,
+                target: Template {
+                    parts: [
+                        Literal(
+                            "/events",
+                        ),
+                    ],
+                    span: Span {
+                        start: 460,
+                        end: 467,
+                    },
+                },
+                headers: [
+                    Header {
+                        name: "Content-Type",
+                        value: Template {
+                            parts: [
+                                Literal(
+                                    "application/json",
+                                ),
+                            ],
+                            span: Span {
+                                start: 482,
+                                end: 498,
+                            },
+                        },
+                        span: Span {
+                            start: 468,
+                            end: 498,
+                        },
+                    },
+                ],
+                body: Some(
+                    Body {
+                        lang: Json,
+                        content: "{ \"kind\": \"click\" }",
+                        span: Span {
+                            start: 633,
+                            end: 664,
+                        },
+                    },
+                ),
+                directives: [
+                    Assert {
+                        assertion: Status {
+                            op: Eq,
+                            code: 201,
+                        },
+                        span: Span {
+                            start: 666,
+                            end: 688,
+                        },
+                    },
+                ],
+                span: Span {
+                    start: 452,
+                    end: 689,
+                },
+                heading_span: Span {
+                    start: 452,
+                    end: 467,
+                },
+            },
+            Request {
+                method: Get,
+                target: Template {
+                    parts: [
+                        Literal(
+                            "/health",
+                        ),
+                    ],
+                    span: Span {
+                        start: 697,
+                        end: 704,
+                    },
+                },
+                headers: [],
+                body: None,
+                directives: [],
+                span: Span {
+                    start: 690,
+                    end: 761,
+                },
+                heading_span: Span {
+                    start: 690,
+                    end: 704,
+                },
+            },
+            Request {
+                method: Put,
+                target: Template {
+                    parts: [
+                        Literal(
+                            "/config",
+                        ),
+                    ],
+                    span: Span {
+                        start: 769,
+                        end: 776,
+                    },
+                },
+                headers: [
+                    Header {
+                        name: "X-Form",
+                        value: Template {
+                            parts: [
+                                Literal(
+                                    "yes",
+                                ),
+                            ],
+                            span: Span {
+                                start: 785,
+                                end: 788,
+                            },
+                        },
+                        span: Span {
+                            start: 777,
+                            end: 788,
+                        },
+                    },
+                ],
+                body: Some(
+                    Body {
+                        lang: Form,
+                        content: "profile: avatar.png\nname: jamie",
+                        span: Span {
+                            start: 790,
+                            end: 833,
+                        },
+                    },
+                ),
+                directives: [],
+                span: Span {
+                    start: 762,
+                    end: 833,
+                },
+                heading_span: Span {
+                    start: 762,
+                    end: 776,
+                },
+            },
+        ],
+    },
+    errors: [],
+}

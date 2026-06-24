@@ -1,0 +1,48 @@
+---
+source: crates/restmd-core/tests/snapshots.rs
+expression: parsed
+input_file: crates/restmd-core/tests/fixtures/frontmatter_invalid.md
+---
+Parsed {
+    document: Document {
+        frontmatter: None,
+        requests: [
+            Request {
+                method: Get,
+                target: Template {
+                    parts: [
+                        Literal(
+                            "/ping",
+                        ),
+                    ],
+                    span: Span {
+                        start: 300,
+                        end: 305,
+                    },
+                },
+                headers: [],
+                body: None,
+                directives: [],
+                span: Span {
+                    start: 293,
+                    end: 305,
+                },
+                heading_span: Span {
+                    start: 293,
+                    end: 305,
+                },
+            },
+        ],
+    },
+    errors: [
+        ParseError {
+            kind: Frontmatter(
+                "unknown field `unknown_key`, expected one of `base`, `openapi`, `environments`, `defaults`, `timeout`, `retries` at line 3 column 1",
+            ),
+            span: Span {
+                start: 0,
+                end: 103,
+            },
+        },
+    ],
+}

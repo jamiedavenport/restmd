@@ -1,0 +1,15 @@
+[package]
+name = "restmd-core"
+description = "Parser, types, and (later) executor for restmd — a markdown-native REST client."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[dependencies]
+serde = { workspace = true }
+serde_yaml = { workspace = true }
+thiserror = { workspace = true }
+
+[dev-dependencies]
+insta = { workspace = true, features = ["glob"] }

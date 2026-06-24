@@ -1,0 +1,296 @@
+---
+source: crates/restmd-core/tests/snapshots.rs
+expression: parsed
+input_file: crates/restmd-core/tests/fixtures/templates_and_directives.md
+---
+Parsed {
+    document: Document {
+        frontmatter: None,
+        requests: [
+            Request {
+                method: Get,
+                target: Template {
+                    parts: [
+                        Literal(
+                            "/search?q=",
+                        ),
+                        Var {
+                            name: "query",
+                            modifier: Optional,
+                            span: Span {
+                                start: 122,
+                                end: 132,
+                            },
+                        },
+                        Literal(
+                            "&page=",
+                        ),
+                        Var {
+                            name: "page",
+                            modifier: Default(
+                                "1",
+                            ),
+                            span: Span {
+                                start: 138,
+                                end: 148,
+                            },
+                        },
+                    ],
+                    span: Span {
+                        start: 112,
+                        end: 148,
+                    },
+                },
+                headers: [
+                    Header {
+                        name: "Accept",
+                        value: Template {
+                            parts: [
+                                Var {
+                                    name: "accept",
+                                    modifier: Default(
+                                        "application/json",
+                                    ),
+                                    span: Span {
+                                        start: 157,
+                                        end: 184,
+                                    },
+                                },
+                            ],
+                            span: Span {
+                                start: 157,
+                                end: 184,
+                            },
+                        },
+                        span: Span {
+                            start: 149,
+                            end: 184,
+                        },
+                    },
+                    Header {
+                        name: "X-Request-Id",
+                        value: Template {
+                            parts: [
+                                Call {
+                                    func: "uuid",
+                                    args: [],
+                                    span: Span {
+                                        start: 199,
+                                        end: 209,
+                                    },
+                                },
+                            ],
+                            span: Span {
+                                start: 199,
+                                end: 209,
+                            },
+                        },
+                        span: Span {
+                            start: 185,
+                            end: 209,
+                        },
+                    },
+                    Header {
+                        name: "X-Token",
+                        value: Template {
+                            parts: [
+                                Literal(
+                                    "Bearer ",
+                                ),
+                                Call {
+                                    func: "base64",
+                                    args: [
+                                        "creds",
+                                    ],
+                                    span: Span {
+                                        start: 226,
+                                        end: 243,
+                                    },
+                                },
+                            ],
+                            span: Span {
+                                start: 219,
+                                end: 243,
+                            },
+                        },
+                        span: Span {
+                            start: 210,
+                            end: 243,
+                        },
+                    },
+                ],
+                body: None,
+                directives: [
+                    Set {
+                        name: "retries",
+                        value: Template {
+                            parts: [
+                                Literal(
+                                    "3",
+                                ),
+                            ],
+                            span: Span {
+                                start: 261,
+                                end: 262,
+                            },
+                        },
+                        span: Span {
+                            start: 245,
+                            end: 262,
+                        },
+                    },
+                    Set {
+                        name: "greeting",
+                        value: Template {
+                            parts: [
+                                Literal(
+                                    "hello ",
+                                ),
+                                Var {
+                                    name: "name",
+                                    modifier: None,
+                                    span: Span {
+                                        start: 286,
+                                        end: 294,
+                                    },
+                                },
+                            ],
+                            span: Span {
+                                start: 280,
+                                end: 294,
+                            },
+                        },
+                        span: Span {
+                            start: 263,
+                            end: 294,
+                        },
+                    },
+                    Capture {
+                        name: "etag",
+                        source: Header(
+                            "ETag",
+                        ),
+                        span: Span {
+                            start: 295,
+                            end: 333,
+                        },
+                    },
+                    Capture {
+                        name: "code",
+                        source: Status,
+                        span: Span {
+                            start: 334,
+                            end: 366,
+                        },
+                    },
+                    Capture {
+                        name: "id",
+                        source: JsonPath(
+                            "$.data.id",
+                        ),
+                        span: Span {
+                            start: 367,
+                            end: 393,
+                        },
+                    },
+                    Assert {
+                        assertion: Status {
+                            op: Ge,
+                            code: 200,
+                        },
+                        span: Span {
+                            start: 394,
+                            end: 416,
+                        },
+                    },
+                    Assert {
+                        assertion: Status {
+                            op: Ne,
+                            code: 500,
+                        },
+                        span: Span {
+                            start: 417,
+                            end: 439,
+                        },
+                    },
+                    Assert {
+                        assertion: Body {
+                            path: "$.items",
+                            op: Exists,
+                        },
+                        span: Span {
+                            start: 440,
+                            end: 463,
+                        },
+                    },
+                    Assert {
+                        assertion: Body {
+                            path: "$.name",
+                            op: Compare(
+                                Eq,
+                                String(
+                                    "Q4 Launch",
+                                ),
+                            ),
+                        },
+                        span: Span {
+                            start: 464,
+                            end: 494,
+                        },
+                    },
+                    Assert {
+                        assertion: Body {
+                            path: "$.count",
+                            op: Compare(
+                                Ge,
+                                Number(
+                                    3.0,
+                                ),
+                            ),
+                        },
+                        span: Span {
+                            start: 495,
+                            end: 516,
+                        },
+                    },
+                    Assert {
+                        assertion: Body {
+                            path: "$.active",
+                            op: Compare(
+                                Eq,
+                                Bool(
+                                    true,
+                                ),
+                            ),
+                        },
+                        span: Span {
+                            start: 517,
+                            end: 542,
+                        },
+                    },
+                    Assert {
+                        assertion: Body {
+                            path: "$.email",
+                            op: Matches(
+                                ".+@.+",
+                            ),
+                        },
+                        span: Span {
+                            start: 543,
+                            end: 575,
+                        },
+                    },
+                ],
+                span: Span {
+                    start: 105,
+                    end: 575,
+                },
+                heading_span: Span {
+                    start: 105,
+                    end: 148,
+                },
+            },
+        ],
+    },
+    errors: [],
+}
