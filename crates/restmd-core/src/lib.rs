@@ -18,6 +18,8 @@
 #![warn(clippy::all)]
 
 mod error;
+#[cfg(feature = "exec")]
+mod exec;
 mod model;
 mod parser;
 mod resolve;
@@ -25,6 +27,11 @@ mod span;
 mod template;
 
 pub use error::{ParseError, ParseErrorKind};
+#[cfg(feature = "exec")]
+pub use exec::{
+    AssertionResult, CaptureResult, ExecError, HttpRequest, HttpResponse, HttpTransport,
+    RequestOutcome, ReqwestTransport, RunOptions, RunReport, Runner, TransportError,
+};
 pub use model::{
     AssertOp, Assertion, Body, BodyLang, CaptureSource, CompareOp, ConfigValue, Directive,
     Document, Frontmatter, Header, Method, Request, Value,
