@@ -1904,6 +1904,7 @@ dependencies = [
  "clap",
  "restmd-core",
  "restmd-tui",
+ "serde_json",
  "tempfile",
 ]
 

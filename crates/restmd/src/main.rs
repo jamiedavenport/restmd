@@ -1,12 +1,17 @@
 //! The `restmd` binary.
 //!
 //! With no subcommand it opens the TUI on a directory of `.restmd` request files
-//! (default `./.restmd`). `restmd init` scaffolds that directory. `run`/`check`
-//! are planned and will slot in as further subcommands.
+//! (default `./.restmd`). `restmd init` scaffolds that directory, `restmd check`
+//! validates files, and `restmd format` canonicalizes them. `run` is planned and
+//! will slot in as a further subcommand.
 
+mod check;
+mod files;
+mod format;
 mod init;
 
 use std::path::PathBuf;
+use std::process::ExitCode;
 
 use clap::{Parser, Subcommand};
 
@@ -30,15 +35,40 @@ enum Command {
         #[arg(default_value = ".restmd")]
         dir: PathBuf,
     },
+    /// Parse and validate request files without sending requests.
+    Check {
+        /// Files or directories to check (default `.restmd`).
+        #[arg(default_value = ".restmd")]
+        paths: Vec<PathBuf>,
+    },
+    /// Canonicalize the formatting of request files in place.
+    Format {
+        /// Files or directories to format (default `.restmd`).
+        #[arg(default_value = ".restmd")]
+        paths: Vec<PathBuf>,
+        /// Report whether files are formatted without writing changes; exits
+        /// non-zero if any file would change.
+        #[arg(long)]
+        check: bool,
+    },
 }
 
-fn main() -> anyhow::Result<()> {
+fn main() -> ExitCode {
     let cli = Cli::parse();
-    match cli.command {
-        Some(Command::Init { dir }) => init::run(&dir),
+    let result = match cli.command {
+        Some(Command::Init { dir }) => init::run(&dir).map(|()| ExitCode::SUCCESS),
+        Some(Command::Check { paths }) => check::run(&paths),
+        Some(Command::Format { paths, check }) => format::run(&paths, check),
         None => {
             let dir = cli.dir.unwrap_or_else(|| PathBuf::from(".restmd"));
-            restmd_tui::run(dir)
+            restmd_tui::run(dir).map(|()| ExitCode::SUCCESS)
+        }
+    };
+    match result {
+        Ok(code) => code,
+        Err(err) => {
+            eprintln!("error: {err:#}");
+            ExitCode::FAILURE
         }
     }
 }
