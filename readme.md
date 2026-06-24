@@ -1,5 +1,7 @@
 # `restmd`
 
+[![CI](https://github.com/jamiedavenport/restmd/actions/workflows/ci.yml/badge.svg)](https://github.com/jamiedavenport/restmd/actions/workflows/ci.yml)
+
 A markdown-native REST client. Requests live in `.md` files — version-controlled,
 diffable, and executable. See [`spec.md`](./spec.md) for the full design and
 [`CLAUDE.md`](./CLAUDE.md) for the crate layout.
