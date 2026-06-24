@@ -30,7 +30,7 @@ pub use error::{ParseError, ParseErrorKind};
 #[cfg(feature = "exec")]
 pub use exec::{
     AssertionResult, CaptureResult, ExecError, HttpRequest, HttpResponse, HttpTransport,
-    RequestOutcome, ReqwestTransport, RunOptions, RunReport, Runner, TransportError,
+    RequestOutcome, ReqwestTransport, ResponseView, RunOptions, RunReport, Runner, TransportError,
 };
 pub use model::{
     AssertOp, Assertion, Body, BodyLang, CaptureSource, CompareOp, ConfigValue, Directive,

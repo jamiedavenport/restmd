@@ -17,10 +17,11 @@ mod report;
 mod transport;
 
 pub use error::ExecError;
-pub use report::{AssertionResult, CaptureResult, RequestOutcome, RunReport};
+pub use report::{AssertionResult, CaptureResult, RequestOutcome, ResponseView, RunReport};
 pub use transport::{HttpRequest, HttpResponse, HttpTransport, ReqwestTransport, TransportError};
 
 use std::collections::BTreeMap;
+use std::time::Instant;
 
 use crate::model::{ConfigValue, Directive, Document, Request};
 use crate::resolve::{Context, Resolver};
@@ -55,6 +56,17 @@ impl<T: HttpTransport> Runner<T> {
 
     /// Execute every request in `doc` sequentially.
     pub fn run(&self, doc: &Document, opts: &RunOptions) -> RunReport {
+        self.run_bounded(doc, doc.requests.len(), opts)
+    }
+
+    /// Execute requests `0..=end_index`, threading captures forward. Used to run
+    /// a single request together with the earlier ones it may depend on.
+    pub fn run_through(&self, doc: &Document, end_index: usize, opts: &RunOptions) -> RunReport {
+        self.run_bounded(doc, end_index.saturating_add(1), opts)
+    }
+
+    /// Execute the first `count` requests (saturating at the document length).
+    fn run_bounded(&self, doc: &Document, count: usize, opts: &RunOptions) -> RunReport {
         let frontmatter = doc.frontmatter.as_ref();
         let empty_env = BTreeMap::new();
 
@@ -84,7 +96,7 @@ impl<T: HttpTransport> Runner<T> {
         let mut runtime: BTreeMap<String, String> = BTreeMap::new();
         let mut outcomes = Vec::new();
 
-        for request in &doc.requests {
+        for request in doc.requests.iter().take(count) {
             let ctx = Context::builder()
                 .captures(runtime.clone())
                 .vars(opts.vars.clone())
@@ -121,6 +133,7 @@ impl<T: HttpTransport> Runner<T> {
             status: None,
             captures: Vec::new(),
             assertions: Vec::new(),
+            response: None,
             error: Some(error),
         };
 
@@ -129,10 +142,12 @@ impl<T: HttpTransport> Runner<T> {
             Err(e) => return fail(String::new(), e),
         };
         let url = http_req.url.clone();
+        let started = Instant::now();
         let response = match self.transport.send(&http_req) {
             Ok(r) => r,
             Err(e) => return fail(url, ExecError::Network(e)),
         };
+        let elapsed = started.elapsed();
 
         // Captures feed later requests; record each result.
         let mut captures = Vec::new();
@@ -182,6 +197,12 @@ impl<T: HttpTransport> Runner<T> {
             status: Some(response.status),
             captures,
             assertions,
+            response: Some(ResponseView {
+                status: response.status,
+                headers: response.headers,
+                body: response.body,
+                elapsed,
+            }),
             error: None,
         }
     }

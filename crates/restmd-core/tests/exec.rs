@@ -288,3 +288,47 @@ fn login_use_delete_flow() {
     assert_eq!(methods, ["POST", "GET", "DELETE"]);
     assert_eq!(reqs[2].path, "/projects/tok123");
 }
+
+// ---------------------------------------------------------------------------
+// Response snapshot & prefix run
+// ---------------------------------------------------------------------------
+
+#[test]
+fn outcome_carries_the_response_snapshot() {
+    let s = TestServer::start();
+    let doc = parse_doc(&format!("base: {}", s.base), "## GET /data\n");
+    let report = run(&doc);
+    let response = report.outcomes[0]
+        .response
+        .as_ref()
+        .expect("response present");
+    assert_eq!(response.status, 200);
+    assert!(response.body_text().contains("Q4 Launch"));
+    assert!(
+        response
+            .headers
+            .iter()
+            .any(|(k, _)| k.eq_ignore_ascii_case("etag"))
+    );
+}
+
+#[test]
+fn run_through_runs_only_the_prefix_but_threads_captures() {
+    let s = TestServer::start();
+    // Three requests; running through index 1 should execute the first two only,
+    // and the second must still see the capture from the first.
+    let body = "## POST /auth/login\n\n```json\n{\"e\":\"x\"}\n```\n\n\
+> capture token = $.access_token\n\n\
+## GET /projects/{{token}}\n\n\
+## DELETE /projects/{{token}}\n";
+    let doc = parse_doc(&format!("base: {}", s.base), body);
+
+    let report = Runner::new(ReqwestTransport::new()).run_through(&doc, 1, &RunOptions::default());
+    assert_eq!(report.exit_code(), 0);
+    assert_eq!(report.outcomes.len(), 2); // the DELETE was not run
+
+    let reqs = s.requests();
+    let methods: Vec<_> = reqs.iter().map(|r| r.method.as_str()).collect();
+    assert_eq!(methods, ["POST", "GET"]);
+    assert_eq!(reqs[1].path, "/projects/tok123");
+}

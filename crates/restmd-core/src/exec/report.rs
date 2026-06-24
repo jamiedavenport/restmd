@@ -1,7 +1,25 @@
 //! The run report: per-request outcomes and the overall exit code.
 
+use std::time::Duration;
+
 use super::error::ExecError;
 use crate::model::Method;
+
+/// A snapshot of the response, kept for inspection (e.g. the TUI response pane).
+#[derive(Debug, Clone, PartialEq)]
+pub struct ResponseView {
+    pub status: u16,
+    pub headers: Vec<(String, String)>,
+    pub body: Vec<u8>,
+    pub elapsed: Duration,
+}
+
+impl ResponseView {
+    /// The body decoded as UTF-8 (lossy), for display.
+    pub fn body_text(&self) -> std::borrow::Cow<'_, str> {
+        String::from_utf8_lossy(&self.body)
+    }
+}
 
 /// Result of one `capture` directive.
 #[derive(Debug, Clone, PartialEq)]
@@ -38,6 +56,8 @@ pub struct RequestOutcome {
     pub status: Option<u16>,
     pub captures: Vec<CaptureResult>,
     pub assertions: Vec<AssertionResult>,
+    /// The response, if the request completed.
+    pub response: Option<ResponseView>,
     /// A fatal error for this request (aborts the run).
     pub error: Option<ExecError>,
 }

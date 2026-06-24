@@ -1,0 +1,16 @@
+[package]
+name = "restmd-cli"
+description = "The restmd command-line entry point."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[[bin]]
+name = "restmd"
+path = "src/main.rs"
+
+[dependencies]
+restmd-tui = { path = "../restmd-tui" }
+clap = { workspace = true }
+anyhow = { workspace = true }

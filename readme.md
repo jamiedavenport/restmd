@@ -1,10 +1,25 @@
 # `restmd`
 
 A markdown-native REST client. Requests live in `.md` files — version-controlled,
-diffable, and executable. See [`spec.md`](./spec.md) for the full design.
+diffable, and executable. See [`spec.md`](./spec.md) for the full design and
+[`CLAUDE.md`](./CLAUDE.md) for the crate layout.
 
-> Status: early. `restmd-core` parses documents into a typed tree; execution and
-> the CLI/TUI/LSP surfaces are not built yet.
+> Status: early but usable. `restmd-core` parses, resolves variables, and
+> executes requests (captures, assertions). `restmd-tui` is an interactive
+> three-pane client; `restmd` (CLI) opens the TUI. The LSP is not built yet.
+
+## Try the TUI
+
+A runnable playground lives in [`demo/`](./demo/README.md). In two terminals:
+
+```sh
+cargo run -p restmd-tui --bin restmd-devserver   # 1. local server for the demo requests
+cargo run -p restmd-cli -- demo/.restmd          # 2. open the TUI
+```
+
+Navigate with `Tab`/`h`/`l` and `j`/`k`, press `Enter` to run a request (and the
+earlier ones it depends on), `o` to open the current file in `$EDITOR`, `q` to
+quit. Editing a file under `demo/.restmd/` refreshes the TUI live.
 
 ## Common commands
 

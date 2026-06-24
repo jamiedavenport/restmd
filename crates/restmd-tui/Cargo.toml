@@ -1,0 +1,27 @@
+[package]
+name = "restmd-tui"
+description = "Terminal UI for restmd — navigate, run, and inspect markdown REST requests."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[dependencies]
+restmd-core = { path = "../restmd-core" }
+ratatui = { workspace = true }
+notify = { workspace = true }
+anyhow = { workspace = true }
+serde_json = { workspace = true }
+tiny_http = { workspace = true }
+
+[dev-dependencies]
+restmd-core = { path = "../restmd-core" }
+tempfile = { workspace = true }
+
+[[bin]]
+name = "restmd-tui"
+path = "src/bin/restmd-tui.rs"
+
+[[bin]]
+name = "restmd-devserver"
+path = "src/bin/restmd-devserver.rs"

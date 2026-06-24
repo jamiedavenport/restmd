@@ -7,10 +7,12 @@ the design and [`readme.md`](./readme.md) for common commands.
 
 | Crate | Path | Status | Responsibility |
 |-------|------|--------|----------------|
-| `restmd-core` | `crates/restmd-core` | in progress | Parser, document model, spans, errors. Source of truth all surfaces build on. (Templating recorded but not resolved; no HTTP execution yet.) |
-| `restmd-cli` | `crates/restmd-cli` | planned | `restmd` binary (clap): `run`, `check`, `ls`, `init`. |
-| `restmd-tui` | `crates/restmd-tui` | planned | `restmd-tui` binary (ratatui): interactive three-pane client. |
+| `restmd-core` | `crates/restmd-core` | active | Parser, document model, spans, errors, variable resolution, and the executor (behind the default `exec` feature). Source of truth all surfaces build on. |
+| `restmd-tui` | `crates/restmd-tui` | active | `restmd-tui` binary (ratatui): three-pane navigate/run/inspect client + file watching. Also ships `restmd-devserver` (a tiny_http dev server) and the `devserver` module. |
+| `restmd-cli` | `crates/restmd-cli` | active | `restmd` binary (clap): currently `restmd [DIR]` opens the TUI; `run`/`check` planned. |
 | `restmd-lsp` | `crates/restmd-lsp` | planned | `restmd-lsp` binary (tower-lsp): completion, hover, diagnostics. Does not execute requests. |
+
+Demo: `cargo run -p restmd-tui --bin restmd-devserver` + `cargo run -p restmd-cli -- demo/.restmd` (see [`demo/README.md`](./demo/README.md)).
 
 ## Code Style
 
