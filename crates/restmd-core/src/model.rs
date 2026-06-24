@@ -67,6 +67,20 @@ pub enum ConfigValue {
     String(String),
 }
 
+impl std::fmt::Display for ConfigValue {
+    /// Stringify for template substitution: `Bool(true)` → `true`,
+    /// `Int(3)` → `3`, `Float(2.5)` → `2.5` (and `Float(3.0)` → `3`),
+    /// `String(s)` → `s` verbatim.
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ConfigValue::Bool(b) => write!(f, "{b}"),
+            ConfigValue::Int(i) => write!(f, "{i}"),
+            ConfigValue::Float(x) => write!(f, "{x}"),
+            ConfigValue::String(s) => f.write_str(s),
+        }
+    }
+}
+
 // ---------------------------------------------------------------------------
 // Requests
 // ---------------------------------------------------------------------------

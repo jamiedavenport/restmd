@@ -12,14 +12,15 @@
 //! assert_eq!(parsed.document.requests.len(), 1);
 //! ```
 //!
-//! Templating (`{{var}}`) is *recorded* but not *resolved*; HTTP execution does
-//! not live here yet. Both are later changes.
+//! Templating (`{{var}}`) is parsed by [`parse`] and resolved by [`Resolver`].
+//! HTTP execution does not live here yet — that is a later change.
 
 #![warn(clippy::all)]
 
 mod error;
 mod model;
 mod parser;
+mod resolve;
 mod span;
 mod template;
 
@@ -29,6 +30,10 @@ pub use model::{
     Document, Frontmatter, Header, Method, Request, Value,
 };
 pub use parser::parse;
+pub use resolve::{
+    Clock, Context, ContextBuilder, IdGen, RandomIdGen, ResolveError, ResolveErrorKind, Resolver,
+    SystemClock,
+};
 pub use span::Span;
 pub use template::{Template, TemplatePart, VarModifier};
 
