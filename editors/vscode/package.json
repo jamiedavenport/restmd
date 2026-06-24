@@ -1,0 +1,52 @@
+{
+  "name": "restmd",
+  "displayName": "restmd",
+  "description": "Language support for restmd request files (.restmd)",
+  "version": "0.1.0",
+  "publisher": "restmd",
+  "license": "MIT OR Apache-2.0",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "activationEvents": [
+    "onLanguage:markdown",
+    "workspaceContains:**/.restmd/**/*.md"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "configuration": {
+      "title": "restmd",
+      "properties": {
+        "restmd.serverPath": {
+          "type": "string",
+          "default": "restmd-lsp",
+          "description": "Path to the restmd-lsp executable (on PATH by default)."
+        }
+      }
+    },
+    "configurationDefaults": {
+      "[markdown]": {
+        "editor.quickSuggestions": {
+          "comments": false,
+          "strings": true,
+          "other": true
+        }
+      }
+    }
+  },
+  "scripts": {
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
+  },
+  "dependencies": {
+    "vscode-languageclient": "^9.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/vscode": "^1.85.0",
+    "typescript": "^5.4.0"
+  }
+}

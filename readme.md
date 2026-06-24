@@ -6,7 +6,9 @@ diffable, and executable. See [`spec.md`](./spec.md) for the full design and
 
 > Status: early but usable. `restmd-core` parses, resolves variables, and
 > executes requests (captures, assertions). `restmd-tui` is an interactive
-> three-pane client; `restmd` (CLI) opens the TUI. The LSP is not built yet.
+> three-pane client; `restmd` (CLI) opens the TUI. `restmd-lsp` provides editor
+> completion/diagnostics/symbols/hover — see [`editors/`](./editors/README.md)
+> for VS Code, Zed, Neovim, and Helix setup.
 
 ## Try the TUI
 

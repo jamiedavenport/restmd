@@ -1,0 +1,26 @@
+[package]
+name = "restmd-lsp"
+description = "Language server for restmd — completion, diagnostics, and symbols for .restmd files."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[lib]
+name = "restmd_lsp"
+path = "src/lib.rs"
+
+[[bin]]
+name = "restmd-lsp"
+path = "src/main.rs"
+
+[dependencies]
+# The LSP only parses/analyzes — no execution, so no exec feature (no reqwest).
+restmd-core = { path = "../restmd-core", default-features = false }
+lsp-server = { workspace = true }
+lsp-types = { workspace = true }
+line-index = { workspace = true }
+text-size = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+anyhow = { workspace = true }

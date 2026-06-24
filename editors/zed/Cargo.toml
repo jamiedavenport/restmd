@@ -1,0 +1,15 @@
+# Independent of the main workspace (its own `[workspace]`) — Zed compiles this
+# to wasm32 when you install it as a dev extension.
+[package]
+name = "zed_restmd"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+zed_extension_api = "0.7"
+
+[workspace]

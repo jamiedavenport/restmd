@@ -1,0 +1,19 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Run restmd extension (Dev Host)",
+      "type": "extensionHost",
+      "request": "launch",
+      "args": [
+        "--extensionDevelopmentPath=${workspaceFolder}",
+        "${workspaceFolder}/../../demo"
+      ],
+      "outFiles": ["${workspaceFolder}/out/**/*.js"],
+      "env": {
+        "RESTMD_LSP_PATH": "${workspaceFolder}/../../target/debug/restmd-lsp"
+      },
+      "preLaunchTask": "build-lsp"
+    }
+  ]
+}
