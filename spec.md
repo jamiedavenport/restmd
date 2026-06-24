@@ -41,7 +41,7 @@ Single Cargo workspace, multiple crates:
 restmd/
 ├── crates/
 │   ├── restmd-core/      # Parser, types, env resolution, executor
-│   ├── restmd-cli/       # `restmd` binary (clap)
+│   ├── restmd/           # `restmd` binary (clap)
 │   ├── restmd-tui/       # `restmd-tui` binary (ratatui)
 │   └── restmd-lsp/       # `restmd-lsp` binary (tower-lsp)
 ├── editors/

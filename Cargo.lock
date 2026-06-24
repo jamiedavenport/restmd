@@ -1897,7 +1897,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "restmd-cli"
+name = "restmd"
 version = "0.1.0"
 dependencies = [
  "anyhow",

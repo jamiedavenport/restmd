@@ -6,7 +6,8 @@ members = ["crates/*"]
 version = "0.1.0"
 edition = "2024"
 license = "MIT OR Apache-2.0"
-repository = "https://github.com/jxd/restmd"
+repository = "https://github.com/jamiedavenport/restmd"
+homepage = "https://github.com/jamiedavenport/restmd"
 
 [workspace.dependencies]
 serde = { version = "1", features = ["derive"] }
@@ -30,3 +31,37 @@ line-index = "0.1"
 text-size = "1"
 insta = "1"
 tempfile = "3"
+
+# Config for 'dist'
+[workspace.metadata.dist]
+# CI backends to support
+ci = "github"
+# The installers to generate for each app
+installers = ["shell", "powershell", "homebrew"]
+# A GitHub repo to push Homebrew formulas to
+tap = "jamiedavenport/homebrew-tap"
+# Publish jobs to run in CI (push the formula to the tap)
+publish-jobs = ["homebrew"]
+# Target platforms to build apps for (Rust target-triple syntax)
+targets = ["aarch64-apple-darwin", "aarch64-unknown-linux-gnu", "x86_64-apple-darwin", "x86_64-unknown-linux-gnu", "x86_64-pc-windows-msvc"]
+# Whether to install an updater program
+install-updater = true
+# Which actions to run on pull requests
+pr-run-mode = "plan"
+# The preferred dist version to use in CI (Cargo.toml SemVer syntax)
+cargo-dist-version = "0.32.0"
+# Path that installers should place binaries in
+install-path = "CARGO_HOME"
+
+# cargo-release: one shared version + one `vX.Y.Z` tag for the whole workspace.
+[workspace.metadata.release]
+shared-version = true
+tag-name = "v{{version}}"
+publish = false
+push = true
+pre-release-commit-message = "Release {{version}}"
+
+# The profile that 'dist' will build with
+[profile.dist]
+inherits = "release"
+lto = "thin"

@@ -9,7 +9,7 @@ Open two terminals from the repo root:
 cargo run -p restmd-tui --bin restmd-devserver
 
 # 2. open the TUI on the demo requests
-cargo run -p restmd-cli -- demo/.restmd
+cargo run -p restmd -- demo/.restmd
 ```
 
 In the TUI:

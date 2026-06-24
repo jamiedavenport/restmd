@@ -6,6 +6,11 @@ edition.workspace = true
 license.workspace = true
 repository.workspace = true
 
+# The `restmd-tui` and `restmd-devserver` binaries are dev tools; the `restmd`
+# CLI ships the TUI via this crate's library. Don't distribute the binaries.
+[package.metadata.dist]
+dist = false
+
 [dependencies]
 restmd-core = { path = "../restmd-core" }
 ratatui = { workspace = true }

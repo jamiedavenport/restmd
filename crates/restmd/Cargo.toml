@@ -1,10 +1,11 @@
 [package]
-name = "restmd-cli"
-description = "The restmd command-line entry point."
+name = "restmd"
+description = "A markdown-native REST client (CLI)."
 version.workspace = true
 edition.workspace = true
 license.workspace = true
 repository.workspace = true
+homepage.workspace = true
 
 [[bin]]
 name = "restmd"
