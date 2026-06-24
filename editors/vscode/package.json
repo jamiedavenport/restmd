@@ -2,9 +2,14 @@
   "name": "restmd",
   "displayName": "restmd",
   "description": "Language support for restmd request files (.restmd)",
-  "version": "0.1.0",
-  "publisher": "restmd",
-  "license": "MIT OR Apache-2.0",
+  "version": "0.2.0",
+  "publisher": "jamiedavenport",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jamiedavenport/restmd.git",
+    "directory": "editors/vscode"
+  },
   "engines": {
     "vscode": "^1.85.0"
   },
