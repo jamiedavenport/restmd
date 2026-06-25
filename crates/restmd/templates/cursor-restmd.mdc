@@ -1,0 +1,17 @@
+---
+description: restmd request authoring and validation
+globs: ["**/*.md"]
+alwaysApply: true
+---
+
+# restmd request files
+
+Use `AGENTS.md` in this directory as the source of truth for restmd request
+structure, validation commands, and agent safety guidance.
+
+- Validate with `restmd check .`.
+- Check formatting with `restmd format . --check`.
+- Run requests only when execution is intended: `restmd run . --format json`.
+- Do not invent secrets, tokens, hosts, or credentials.
+- Use `{{name}}` variables with captures, `--var name=value`,
+  `RESTMD_VAR_<NAME>`, or frontmatter environments.

@@ -6,6 +6,14 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+## [0.5.0] - 2026-06-25
+
+### Added
+
+- `restmd init` now detects common coding-agent environments and scaffolds
+  scoped agent context alongside `example.md`: a portable `AGENTS.md` plus the
+  detected agent's adapter files. Existing agent files are left untouched.
+
 ## [0.4.0] - 2026-06-25
 
 ### Added

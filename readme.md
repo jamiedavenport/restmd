@@ -34,6 +34,10 @@ restmd init   # scaffold ./.restmd with an example request
 restmd        # open the TUI on ./.restmd
 ```
 
+When run from a detected coding-agent environment, `restmd init` also creates
+scoped agent context under `.restmd/`: a portable `AGENTS.md` plus only the
+detected agent's adapter files.
+
 Navigate with `Tab`/`h`/`l` and `j`/`k`, press `Enter` to run a request (and the
 earlier ones it depends on), `o` to open the current file in `$EDITOR`, `q` to
 quit. Editing a file under `.restmd/` refreshes the TUI live. A runnable
