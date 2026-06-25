@@ -1898,7 +1898,7 @@ dependencies = [
 
 [[package]]
 name = "restmd"
-version = "0.3.0"
+version = "0.3.1"
 dependencies = [
  "anyhow",
  "clap",
@@ -1911,7 +1911,7 @@ dependencies = [
 
 [[package]]
 name = "restmd-core"
-version = "0.3.0"
+version = "0.3.1"
 dependencies = [
  "base64",
  "insta",
@@ -1929,7 +1929,7 @@ dependencies = [
 
 [[package]]
 name = "restmd-lsp"
-version = "0.3.0"
+version = "0.3.1"
 dependencies = [
  "anyhow",
  "line-index",
@@ -1943,7 +1943,7 @@ dependencies = [
 
 [[package]]
 name = "restmd-tui"
-version = "0.3.0"
+version = "0.3.1"
 dependencies = [
  "anyhow",
  "notify",

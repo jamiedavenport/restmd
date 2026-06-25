@@ -6,6 +6,14 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+## [0.3.1] - 2026-06-25
+
+### Fixed
+
+- `restmd lsp` now accepts the `--stdio` flag that LSP clients (e.g. VS Code)
+  append to the server command, instead of exiting with a usage error. This
+  unbreaks the VS Code integration (and any other standard LSP client).
+
 ## [0.3.0] - 2026-06-25
 
 ### Changed

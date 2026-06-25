@@ -53,7 +53,12 @@ enum Command {
         check: bool,
     },
     /// Run the language server over stdio (used by editor extensions).
-    Lsp,
+    Lsp {
+        /// Accepted for compatibility with LSP clients (e.g. VS Code) that pass
+        /// `--stdio`. stdio is the only transport, so this is a no-op.
+        #[arg(long)]
+        stdio: bool,
+    },
 }
 
 fn main() -> ExitCode {
@@ -62,7 +67,7 @@ fn main() -> ExitCode {
         Some(Command::Init { dir }) => init::run(&dir).map(|()| ExitCode::SUCCESS),
         Some(Command::Check { paths }) => check::run(&paths),
         Some(Command::Format { paths, check }) => format::run(&paths, check),
-        Some(Command::Lsp) => restmd_lsp::run_stdio().map(|()| ExitCode::SUCCESS),
+        Some(Command::Lsp { .. }) => restmd_lsp::run_stdio().map(|()| ExitCode::SUCCESS),
         None => {
             let dir = cli.dir.unwrap_or_else(|| PathBuf::from(".restmd"));
             restmd_tui::run(dir).map(|()| ExitCode::SUCCESS)
