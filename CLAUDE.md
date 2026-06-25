@@ -9,7 +9,7 @@ the design and [`readme.md`](./readme.md) for common commands.
 |-------|------|--------|----------------|
 | `restmd-core` | `crates/restmd-core` | active | Parser, document model, spans, errors, variable resolution, and the executor (behind the default `exec` feature). Source of truth all surfaces build on. |
 | `restmd-tui` | `crates/restmd-tui` | active | `restmd-tui` binary (ratatui): three-pane navigate/run/inspect client + file watching. Also ships `restmd-devserver` (a tiny_http dev server) and the `devserver` module. |
-| `restmd` | `crates/restmd` | active | `restmd` binary (clap): `restmd [DIR]` opens the TUI, `restmd init [DIR]` scaffolds a `.restmd` dir, `restmd check [PATHS]` validates files, `restmd format [PATHS] [--check]` canonicalizes them, `restmd lsp` runs the bundled language server over stdio; `run` planned. |
+| `restmd` | `crates/restmd` | active | `restmd` binary (clap): `restmd [DIR]` opens the TUI, `restmd init [DIR]` scaffolds a `.restmd` dir, `restmd check [PATHS]` validates files, `restmd format [PATHS] [--check]` canonicalizes them, `restmd run [PATHS] [-r REQUEST] [--env NAME] [--var k=v] [--format pretty\|json\|junit]` sends requests and reports results for scripts/CI, `restmd lsp` runs the bundled language server over stdio. |
 | `restmd-lsp` | `crates/restmd-lsp` | active | Library crate (lsp-server, sync, no tokio): completion, diagnostics, document symbols, hover for `.restmd` files. Does not execute requests. Has no binary of its own — the `restmd` CLI depends on it and exposes it as `restmd lsp`. |
 
 Editor support: `editors/vscode` — a minimal VS Code extension that launches `restmd lsp` (F5 → Extension Dev Host; see its README).

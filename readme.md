@@ -36,6 +36,35 @@ earlier ones it depends on), `o` to open the current file in `$EDITOR`, `q` to
 quit. Editing a file under `.restmd/` refreshes the TUI live. A runnable
 playground lives in [`demo/`](./demo/README.md).
 
+## Running in CI
+
+`restmd run` sends requests headlessly and reports the results — no TUI, script-
+and pipeline-friendly. With no path it runs every `.md` file in `./.restmd`;
+pass files or directories to narrow it down.
+
+```sh
+restmd run                       # run every file in ./.restmd
+restmd run demo/.restmd          # run a directory
+restmd run demo/.restmd/auth.md  # run one file
+```
+
+The exit code is what CI keys off: `0` success, `1` assertion failure, `2` parse
+error, `3` network error, `4` config error. The most severe wins when several
+files run.
+
+- `--format pretty` (default, colored in a terminal), `json` (a machine-readable
+  report), or `junit` (XML test report for CI to ingest).
+- `--env NAME` selects an `environments` block from the frontmatter; `--var k=v`
+  (repeatable) overrides individual variables.
+- `-r REQUEST` runs a single request — by 1-based index or a substring of its
+  heading. The earlier requests it depends on still run (so captures resolve),
+  but only the selected one is reported.
+
+```sh
+restmd run demo/.restmd --env prod --format junit > results.xml
+restmd run demo/.restmd/users.md -r "POST /users" --var id=42
+```
+
 ## Editor integrations
 
 The bundled language server (`restmd lsp`) brings completion, diagnostics,
@@ -139,8 +168,9 @@ them. They run after the response comes back:
 is first-match-wins in this order:
 
 1. Values `capture`d (or `set`) by earlier requests in the run.
-2. `RESTMD_VAR_<NAME>` environment variables.
-3. The selected `environments` block from the frontmatter.
+2. `--var name=value` flags passed to `restmd run`.
+3. `RESTMD_VAR_<NAME>` environment variables.
+4. The selected `environments` block from the frontmatter.
 
 Two modifiers help with missing values: `{{name?}}` resolves to an empty string
 instead of erroring, and `{{name!fallback}}` uses `fallback` when unset.

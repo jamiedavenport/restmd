@@ -14,10 +14,12 @@ path = "src/main.rs"
 [dependencies]
 restmd-tui = { path = "../restmd-tui" }
 restmd-lsp = { path = "../restmd-lsp" }
-restmd-core = { path = "../restmd-core", default-features = false }
+restmd-core = { path = "../restmd-core" }
 clap = { workspace = true }
 anyhow = { workspace = true }
+serde = { workspace = true }
 serde_json = { workspace = true }
 
 [dev-dependencies]
 tempfile = { workspace = true }
+tiny_http = { workspace = true }

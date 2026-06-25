@@ -178,7 +178,8 @@ Fence language determines body handling:
 ### 5.1 CLI (`restmd`)
 
 ```
-restmd run FILE [REQUEST] [--env NAME] [--var k=v] [--format json|pretty|junit]
+restmd run [PATHS] [-r REQUEST] [--env NAME] [--var k=v] [--format json|pretty|junit]
+                                               # run files/dirs (default .restmd); -r selects one request by index or heading
 restmd ls FILE                                 # list requests in a file
 restmd check FILE                              # parse + validate, no requests sent
 restmd init [--openapi SPEC]                   # scaffold a new file

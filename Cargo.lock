@@ -1898,20 +1898,22 @@ dependencies = [
 
 [[package]]
 name = "restmd"
-version = "0.3.1"
+version = "0.4.0"
 dependencies = [
  "anyhow",
  "clap",
  "restmd-core",
  "restmd-lsp",
  "restmd-tui",
+ "serde",
  "serde_json",
  "tempfile",
+ "tiny_http",
 ]
 
 [[package]]
 name = "restmd-core"
-version = "0.3.1"
+version = "0.4.0"
 dependencies = [
  "base64",
  "insta",
@@ -1929,7 +1931,7 @@ dependencies = [
 
 [[package]]
 name = "restmd-lsp"
-version = "0.3.1"
+version = "0.4.0"
 dependencies = [
  "anyhow",
  "line-index",
@@ -1943,7 +1945,7 @@ dependencies = [
 
 [[package]]
 name = "restmd-tui"
-version = "0.3.1"
+version = "0.4.0"
 dependencies = [
  "anyhow",
  "notify",

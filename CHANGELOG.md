@@ -6,6 +6,23 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-06-25
+
+### Added
+
+- `restmd run` sends requests headlessly and reports the results, for scripts
+  and CI. With no path it runs every `.md` file in `./.restmd`; pass files or
+  directories to narrow it down. Exit codes follow the spec (`0` success,
+  `1` assertion failure, `2` parse error, `3` network error, `4` config error),
+  and the most severe wins across files.
+- Three output formats via `--format`: `pretty` (default, colored in a
+  terminal), `json` (machine-readable report), and `junit` (XML test report for
+  CI).
+- `--env NAME` selects an `environments` block and `--var key=value` (repeatable)
+  overrides variables — the first user-facing way to reach this machinery.
+- `-r/--request` runs a single request by 1-based index or heading substring;
+  the earlier requests it depends on still run so captures resolve.
+
 ## [0.3.1] - 2026-06-25
 
 ### Fixed
