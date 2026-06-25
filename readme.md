@@ -11,6 +11,12 @@ diffable, and executable. See [`spec.md`](./spec.md) for the full design.
 > language server (completion/diagnostics/symbols/hover) — see
 > [`editors/`](./editors/README.md) for VS Code, Zed, Neovim, and Helix setup.
 
+## Demo
+
+<video src="https://github.com/jamiedavenport/restmd/raw/main/demo.mp4" controls width="100%"></video>
+
+(If the player doesn't load, [watch demo.mp4](https://github.com/jamiedavenport/restmd/raw/main/demo.mp4).)
+
 ## Install
 
 ```sh
@@ -37,6 +43,19 @@ Navigate with `Tab`/`h`/`l` and `j`/`k`, press `Enter` to run a request (and the
 earlier ones it depends on), `o` to open the current file in `$EDITOR`, `q` to
 quit. Editing a file under `.restmd/` refreshes the TUI live. A runnable
 playground lives in [`demo/`](./demo/README.md).
+
+## Editor integrations
+
+The bundled language server (`restmd lsp`) brings completion, diagnostics,
+document symbols, and hover to `.restmd/` files. It engages only inside
+`.restmd/` directories, so your files still render as plain markdown elsewhere.
+
+- **VS Code** — install the [restmd extension](https://marketplace.visualstudio.com/items?itemName=jamiedavenport.restmd)
+  from the Marketplace.
+- **Zed, Neovim, Helix** — see [`editors/`](./editors/README.md) for setup.
+
+Each editor shells out to `restmd lsp`, so just keep the `restmd` binary on your
+`PATH` (the [install](#install) step handles that) — nothing else to install.
 
 ## Writing requests
 
