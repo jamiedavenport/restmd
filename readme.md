@@ -5,17 +5,9 @@
 A markdown-native REST client. Requests live in `.md` files — version-controlled,
 diffable, and executable. See [`spec.md`](./spec.md) for the full design.
 
-> Status: early but usable. `restmd-core` parses, resolves variables, and
-> executes requests (captures, assertions). `restmd-tui` is an interactive
-> three-pane client; `restmd` (CLI) opens the TUI. `restmd lsp` runs the bundled
-> language server (completion/diagnostics/symbols/hover) — see
-> [`editors/`](./editors/README.md) for VS Code, Zed, Neovim, and Helix setup.
-
 ## Demo
 
-<video src="https://github.com/jamiedavenport/restmd/raw/main/demo.mp4" controls width="100%"></video>
-
-(If the player doesn't load, [watch demo.mp4](https://github.com/jamiedavenport/restmd/raw/main/demo.mp4).)
+https://github.com/user-attachments/assets/5ea64e7d-8fa4-492b-9f8c-711acd6f8b00
 
 ## Install
 
