@@ -2,7 +2,7 @@
   "name": "restmd",
   "displayName": "restmd",
   "description": "Language support for restmd request files (.restmd)",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "publisher": "jamiedavenport",
   "license": "MIT",
   "icon": "icon.png",
