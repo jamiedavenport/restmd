@@ -1,4 +1,4 @@
-# `restmd`
+![restmd](./assets/hero.png)
 
 [![CI](https://github.com/jamiedavenport/restmd/actions/workflows/ci.yml/badge.svg)](https://github.com/jamiedavenport/restmd/actions/workflows/ci.yml)
 
