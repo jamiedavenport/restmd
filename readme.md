@@ -1,6 +1,9 @@
 [![restmd](./assets/hero.png)](https://www.jxd.dev/project/restmd)
 
 [![CI](https://github.com/jamiedavenport/restmd/actions/workflows/ci.yml/badge.svg)](https://github.com/jamiedavenport/restmd/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/jamiedavenport/restmd)](https://github.com/jamiedavenport/restmd/releases/latest)
+[![VS Code Marketplace](https://img.shields.io/visual-studio-marketplace/v/jamiedavenport.restmd?label=vs%20code)](https://marketplace.visualstudio.com/items?itemName=jamiedavenport.restmd)
+[![License](https://img.shields.io/github/license/jamiedavenport/restmd)](./LICENSE)
 
 A markdown-native REST client. Requests live in `.md` files — version-controlled,
 diffable, and executable. See [`spec.md`](./spec.md) for the full design.
