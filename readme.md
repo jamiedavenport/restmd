@@ -1,4 +1,4 @@
-![restmd](./assets/hero.png)
+[![restmd](./assets/hero.png)](https://www.jxd.dev/project/restmd)
 
 [![CI](https://github.com/jamiedavenport/restmd/actions/workflows/ci.yml/badge.svg)](https://github.com/jamiedavenport/restmd/actions/workflows/ci.yml)
 
