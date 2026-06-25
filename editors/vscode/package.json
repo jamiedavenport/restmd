@@ -5,6 +5,15 @@
   "version": "0.3.1",
   "publisher": "jamiedavenport",
   "license": "MIT",
+  "icon": "icon.png",
+  "homepage": "https://jxd.dev/projects/restmd",
+  "keywords": [
+    "restmd",
+    "rest",
+    "http",
+    "api",
+    "markdown"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/jamiedavenport/restmd.git",
