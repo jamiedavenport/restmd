@@ -1,13 +1,14 @@
 # Editor setup for restmd
 
-`restmd-lsp` is a standard language server that speaks LSP over **stdio**. It is
-editor-agnostic; what differs per editor is how you launch it and how you
-**scope** it.
+The language server ships inside the `restmd` CLI and runs as `restmd lsp`,
+speaking LSP over **stdio**. It is editor-agnostic; what differs per editor is
+how you launch it and how you **scope** it.
 
-Build it first (or `cargo install --path crates/restmd-lsp` to put it on `PATH`):
+Install the CLI first (or build it to `target/debug/restmd`):
 
 ```sh
-cargo build -p restmd-lsp     # -> target/debug/restmd-lsp
+cargo install --path crates/restmd   # put `restmd` on PATH
+cargo build -p restmd                # -> target/debug/restmd
 ```
 
 ## A note on scoping
@@ -33,9 +34,9 @@ See [`editors/vscode`](./vscode) — a ready extension, F5-runnable. Scoped to
 
 ## Zed
 
-A dev extension is provided in [`editors/zed`](./zed). Install the server
-(`cargo install --path crates/restmd-lsp`), then run **`zed: install dev
-extension`** and select `editors/zed`. It attaches `restmd-lsp` to Markdown, and
+A dev extension is provided in [`editors/zed`](./zed). Install the CLI
+(`cargo install --path crates/restmd`), then run **`zed: install dev
+extension`** and select `editors/zed`. It attaches `restmd lsp` to Markdown, and
 the server self-scopes to `.restmd/` (see the scoping note), so ordinary markdown
 is unaffected. Details in [`editors/zed/README.md`](./zed/README.md).
 
@@ -52,8 +53,8 @@ vim.api.nvim_create_autocmd("FileType", {
     local name = vim.api.nvim_buf_get_name(args.buf)
     if not name:match("/%.restmd/") then return end
     vim.lsp.start({
-      name = "restmd-lsp",
-      cmd = { "restmd-lsp" }, -- or an absolute path to target/debug/restmd-lsp
+      name = "restmd",
+      cmd = { "restmd", "lsp" }, -- or an absolute path to target/debug/restmd
       root_dir = vim.fs.dirname(name),
     })
   end,
@@ -66,10 +67,11 @@ In `languages.toml`, define a language server and attach it to Markdown (runs on
 all markdown — see the scoping note):
 
 ```toml
-[language-server.restmd-lsp]
-command = "restmd-lsp"
+[language-server.restmd]
+command = "restmd"
+args = ["lsp"]
 
 [[language]]
 name = "markdown"
-language-servers = ["restmd-lsp"]
+language-servers = ["restmd"]
 ```

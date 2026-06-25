@@ -6,6 +6,16 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-06-25
+
+### Changed
+
+- The language server now ships inside the `restmd` CLI and runs as `restmd lsp`.
+  The standalone `restmd-lsp` binary is gone, so editor integrations only need
+  the `restmd` binary installed. Editor configs that spawned `restmd-lsp` must
+  switch to `restmd lsp` (VS Code, Zed, Neovim, and Helix examples are updated).
+- Relicensed from `MIT OR Apache-2.0` to MIT only.
+
 ## [0.1.0] - 2026-06-24
 
 ### Added

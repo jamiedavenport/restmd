@@ -13,6 +13,7 @@ path = "src/main.rs"
 
 [dependencies]
 restmd-tui = { path = "../restmd-tui" }
+restmd-lsp = { path = "../restmd-lsp" }
 restmd-core = { path = "../restmd-core", default-features = false }
 clap = { workspace = true }
 anyhow = { workspace = true }

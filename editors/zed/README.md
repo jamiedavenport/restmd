@@ -1,13 +1,13 @@
 # restmd — Zed extension
 
-Wires the `restmd-lsp` language server into Zed.
+Wires the restmd language server (`restmd lsp`) into Zed.
 
 ## Install (development)
 
-1. Put the server on your `PATH`:
+1. Put the `restmd` CLI on your `PATH`:
 
    ```sh
-   cargo install --path crates/restmd-lsp
+   cargo install --path crates/restmd
    ```
 
 2. In Zed: **`zed: install dev extension`** (command palette) and select this
@@ -19,7 +19,7 @@ Wires the `restmd-lsp` language server into Zed.
 ## Scoping note
 
 Zed attaches language servers by *language*, so this extension registers
-`restmd-lsp` for **Markdown** — it sees every markdown file. That's fine: the
+`restmd lsp` for **Markdown** — it sees every markdown file. That's fine: the
 server self-scopes to files under a `.restmd/` directory and stays inert
 elsewhere (no diagnostics, no completion). See the server's `is_restmd` filter.
 

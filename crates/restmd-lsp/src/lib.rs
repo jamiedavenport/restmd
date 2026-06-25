@@ -19,3 +19,15 @@ pub mod symbols;
 
 #[cfg(test)]
 mod tests;
+
+use lsp_server::Connection;
+
+/// Run the language server over stdio until the client disconnects.
+///
+/// This is the entry point editor integrations use via `restmd lsp`.
+pub fn run_stdio() -> anyhow::Result<()> {
+    let (connection, io_threads) = Connection::stdio();
+    server::run(connection)?;
+    io_threads.join()?;
+    Ok(())
+}

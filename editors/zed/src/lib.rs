@@ -1,7 +1,8 @@
-//! Zed extension: wire the `restmd-lsp` language server into Zed.
+//! Zed extension: wire the restmd language server into Zed.
 //!
-//! Per Zed's guidelines the server binary is not bundled — it is located in the
-//! user's environment. Install it with `cargo install --path crates/restmd-lsp`.
+//! The server ships inside the `restmd` CLI and runs as `restmd lsp`. Per Zed's
+//! guidelines the binary is not bundled — it is located in the user's
+//! environment. Install it with `cargo install --path crates/restmd`.
 
 use zed_extension_api::{self as zed, Command, LanguageServerId, Result, Worktree};
 
@@ -17,13 +18,12 @@ impl zed::Extension for RestmdExtension {
         _language_server_id: &LanguageServerId,
         worktree: &Worktree,
     ) -> Result<Command> {
-        let command = worktree.which("restmd-lsp").ok_or_else(|| {
-            "`restmd-lsp` not found on PATH — run `cargo install --path crates/restmd-lsp`"
-                .to_string()
+        let command = worktree.which("restmd").ok_or_else(|| {
+            "`restmd` not found on PATH — run `cargo install --path crates/restmd`".to_string()
         })?;
         Ok(Command {
             command,
-            args: vec![],
+            args: vec!["lsp".to_string()],
             env: vec![],
         })
     }

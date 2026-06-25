@@ -1,6 +1,6 @@
 id = "restmd"
 name = "restmd"
-version = "0.1.0"
+version = "0.3.0"
 schema_version = 1
 authors = ["Jamie Davenport"]
 description = "Completion, diagnostics, document symbols, and hover for restmd request files."
@@ -8,6 +8,6 @@ repository = "https://github.com/jamiedavenport/restmd"
 
 # Attach the language server to Markdown. The server self-scopes to files under a
 # `.restmd/` directory, so it stays inert on ordinary markdown.
-[language_servers.restmd-lsp]
-name = "restmd-lsp"
+[language_servers.restmd]
+name = "restmd"
 language = "Markdown"

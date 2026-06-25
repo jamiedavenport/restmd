@@ -11,9 +11,9 @@
       ],
       "outFiles": ["${workspaceFolder}/out/**/*.js"],
       "env": {
-        "RESTMD_LSP_PATH": "${workspaceFolder}/../../target/debug/restmd-lsp"
+        "RESTMD_PATH": "${workspaceFolder}/../../target/debug/restmd"
       },
-      "preLaunchTask": "build-lsp"
+      "preLaunchTask": "build-server"
     }
   ]
 }

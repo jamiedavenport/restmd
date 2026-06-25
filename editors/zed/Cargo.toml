@@ -2,7 +2,7 @@
 # to wasm32 when you install it as a dev extension.
 [package]
 name = "zed_restmd"
-version = "0.1.0"
+version = "0.3.0"
 edition = "2021"
 license = "MIT"
 publish = false

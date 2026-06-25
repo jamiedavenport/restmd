@@ -43,9 +43,9 @@ restmd/
 │   ├── restmd-core/      # Parser, types, env resolution, executor
 │   ├── restmd/           # `restmd` binary (clap)
 │   ├── restmd-tui/       # `restmd-tui` binary (ratatui)
-│   └── restmd-lsp/       # `restmd-lsp` binary (tower-lsp)
+│   └── restmd-lsp/       # language server library; runs via `restmd lsp`
 ├── editors/
-│   ├── vscode/           # TypeScript extension, bundles restmd-lsp
+│   ├── vscode/           # TypeScript extension, launches `restmd lsp`
 │   └── jetbrains/        # Plugin (post-v1)
 └── Cargo.toml
 ```
@@ -196,7 +196,7 @@ A three-pane interface:
 
 Keybindings follow vim conventions where natural. `Enter` runs the focused request. `gd` jumps to a captured variable's defining request.
 
-### 5.3 LSP (`restmd-lsp`)
+### 5.3 LSP (`restmd lsp`)
 
 Capabilities:
 - Completion: methods, header names/values, fence languages, variable names, JSONPath expressions, OpenAPI-driven path and body completion.
@@ -213,7 +213,7 @@ The LSP does not execute requests. Editor extensions shell out to the `restmd` C
 Parser, executor, variable resolution, captures, assertions, `restmd run` and `restmd check`. Hand-written test fixtures, snapshot tests via `insta`.
 
 ### v0.2 — LSP foundation
-`restmd-lsp` with tier 1 completion (methods, headers, fences) and basic diagnostics (unknown variables, parse errors). VS Code extension published.
+The language server (`restmd lsp`) with tier 1 completion (methods, headers, fences) and basic diagnostics (unknown variables, parse errors). VS Code extension published.
 
 ### v0.3 — TUI
 `restmd-tui` with file navigation, request execution, response inspection. Read-only first; inline editing in v0.4.

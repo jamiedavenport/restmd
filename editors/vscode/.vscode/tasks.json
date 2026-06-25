@@ -2,9 +2,9 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "build-lsp",
+      "label": "build-server",
       "type": "shell",
-      "command": "cargo build -p restmd-lsp && npm run compile",
+      "command": "cargo build -p restmd && npm run compile",
       "options": { "cwd": "${workspaceFolder}" },
       "problemMatcher": ["$rustc", "$tsc"],
       "group": "build"

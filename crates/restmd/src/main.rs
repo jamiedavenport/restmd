@@ -2,8 +2,9 @@
 //!
 //! With no subcommand it opens the TUI on a directory of `.restmd` request files
 //! (default `./.restmd`). `restmd init` scaffolds that directory, `restmd check`
-//! validates files, and `restmd format` canonicalizes them. `run` is planned and
-//! will slot in as a further subcommand.
+//! validates files, `restmd format` canonicalizes them, and `restmd lsp` runs the
+//! language server over stdio for editor integrations. `run` is planned and will
+//! slot in as a further subcommand.
 
 mod check;
 mod files;
@@ -51,6 +52,8 @@ enum Command {
         #[arg(long)]
         check: bool,
     },
+    /// Run the language server over stdio (used by editor extensions).
+    Lsp,
 }
 
 fn main() -> ExitCode {
@@ -59,6 +62,7 @@ fn main() -> ExitCode {
         Some(Command::Init { dir }) => init::run(&dir).map(|()| ExitCode::SUCCESS),
         Some(Command::Check { paths }) => check::run(&paths),
         Some(Command::Format { paths, check }) => format::run(&paths, check),
+        Some(Command::Lsp) => restmd_lsp::run_stdio().map(|()| ExitCode::SUCCESS),
         None => {
             let dir = cli.dir.unwrap_or_else(|| PathBuf::from(".restmd"));
             restmd_tui::run(dir).map(|()| ExitCode::SUCCESS)

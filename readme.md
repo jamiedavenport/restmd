@@ -7,9 +7,9 @@ diffable, and executable. See [`spec.md`](./spec.md) for the full design.
 
 > Status: early but usable. `restmd-core` parses, resolves variables, and
 > executes requests (captures, assertions). `restmd-tui` is an interactive
-> three-pane client; `restmd` (CLI) opens the TUI. `restmd-lsp` provides editor
-> completion/diagnostics/symbols/hover — see [`editors/`](./editors/README.md)
-> for VS Code, Zed, Neovim, and Helix setup.
+> three-pane client; `restmd` (CLI) opens the TUI. `restmd lsp` runs the bundled
+> language server (completion/diagnostics/symbols/hover) — see
+> [`editors/`](./editors/README.md) for VS Code, Zed, Neovim, and Helix setup.
 
 ## Install
 
@@ -23,7 +23,8 @@ powershell -c "irm https://github.com/jamiedavenport/restmd/releases/latest/down
 ```
 
 Update later with `restmd-update`, `brew upgrade`, or by re-running the installer.
-For editor support, also install the language server: `brew install jamiedavenport/tap/restmd-lsp`.
+The `restmd` binary also bundles the language server (`restmd lsp`), so editor
+support needs nothing extra — see [`editors/`](./editors/README.md) for setup.
 
 ## Quick start
 

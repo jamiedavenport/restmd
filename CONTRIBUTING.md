@@ -55,8 +55,8 @@ git push origin main --tags
 ```
 
 The tag triggers `.github/workflows/release.yml`, which cross-compiles `restmd`
-and `restmd-lsp` for macOS/Linux/Windows, builds the installers, creates the
-GitHub Release, and updates the Homebrew tap. Add a `## [0.2.0]` section to
+for macOS/Linux/Windows, builds the installers, creates the GitHub Release, and
+updates the Homebrew tap. Add a `## [0.2.0]` section to
 `CHANGELOG.md` and cargo-dist uses it as the release notes. Preview a release
 locally with `dist plan`.
 

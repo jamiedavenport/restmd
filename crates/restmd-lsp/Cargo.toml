@@ -11,10 +11,6 @@ homepage.workspace = true
 name = "restmd_lsp"
 path = "src/lib.rs"
 
-[[bin]]
-name = "restmd-lsp"
-path = "src/main.rs"
-
 [dependencies]
 # The LSP only parses/analyzes — no execution, so no exec feature (no reqwest).
 restmd-core = { path = "../restmd-core", default-features = false }
