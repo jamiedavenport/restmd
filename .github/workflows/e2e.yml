@@ -1,0 +1,39 @@
+name: E2E
+
+# Installs the published `restmd` CLI via the public curl installer and runs it
+# against the repo's root `.restmd`, gating that the shipped binary actually
+# installs and runs end-to-end. The installer always fetches the latest release,
+# so this validates the most recent published artifact (not unreleased commits).
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: e2e-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  install-and-run:
+    name: Install via curl, run root .restmd
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install restmd from the public installer
+        run: |
+          curl -LsSf https://github.com/jamiedavenport/restmd/releases/latest/download/restmd-installer.sh | sh
+          # cargo-dist installs to ~/.cargo/bin or ~/.local/bin depending on the
+          # environment; put both on PATH for later steps.
+          echo "$HOME/.cargo/bin" >> "$GITHUB_PATH"
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+
+      - name: Show version
+        run: restmd --version
+
+      - name: Run the root .restmd
+        run: restmd run .restmd
