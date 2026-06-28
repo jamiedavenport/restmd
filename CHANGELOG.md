@@ -6,6 +6,15 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+## [0.6.0] - 2026-06-28
+
+### Added
+
+- Requests now retain cookies set by earlier responses in the same file run,
+  with standard domain, path, expiry, and secure-cookie handling. Cookie
+  sessions remain isolated between files and later TUI runs, and explicit
+  `Cookie` headers continue to take precedence.
+
 ## [0.5.0] - 2026-06-25
 
 ### Added

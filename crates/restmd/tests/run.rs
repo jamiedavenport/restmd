@@ -180,6 +180,32 @@ fn directory_aggregates_worst_exit_code() {
     assert_eq!(code(&out), 1, "{}", stdout(&out));
 }
 
+#[test]
+fn directory_runs_do_not_share_cookie_sessions_between_files() {
+    let s = TestServer::start();
+    let dir = TempDir::new().unwrap();
+    write_file(
+        dir.path(),
+        "a-set.md",
+        &format!("---\nbase: {}\n---\n\n## GET /cookies/set\n", s.base),
+    );
+    write_file(
+        dir.path(),
+        "b-check.md",
+        &format!(
+            "---\nbase: {}\n---\n\n## GET /cookies/absent\n\n> assert status == 200\n",
+            s.base
+        ),
+    );
+
+    let out = run(&[dir.path().to_str().unwrap()]);
+    assert_eq!(code(&out), 0, "{}", stdout(&out));
+
+    let reqs = s.requests();
+    assert_eq!(reqs.len(), 2);
+    assert!(reqs[1].header("Cookie").is_none());
+}
+
 // ---------------------------------------------------------------------------
 // Formats
 // ---------------------------------------------------------------------------

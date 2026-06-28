@@ -105,7 +105,6 @@ pub fn run(
         include_os_env: true,
     };
 
-    let runner = Runner::new(ReqwestTransport::new());
     let mut runs = Vec::with_capacity(files.len());
     for path in &files {
         let source =
@@ -115,6 +114,10 @@ pub fn run(
             FileOutcome::ParseErrors(parsed.errors)
         } else {
             let doc = parsed.document;
+            // A transport instance is one in-memory cookie session. Keep that
+            // session scoped to this document so unrelated files cannot share
+            // authentication state.
+            let runner = Runner::new(ReqwestTransport::new());
             match request {
                 Some(sel) => match resolve_selector(sel, &doc, &source) {
                     Ok(index) => {

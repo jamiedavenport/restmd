@@ -63,11 +63,14 @@ impl TestServer {
                 };
                 rec.lock().unwrap().push(recorded.clone());
 
-                let (status, payload, content_type) = route(&recorded.method, &recorded.path);
-                let response = Response::from_string(payload)
+                let (status, payload, content_type, response_headers) = route(&recorded);
+                let mut response = Response::from_string(payload)
                     .with_status_code(status)
                     .with_header(Header::from_bytes(b"Content-Type", content_type).unwrap())
                     .with_header(Header::from_bytes(b"ETag", b"etag-xyz").unwrap());
+                for (name, value) in response_headers {
+                    response.add_header(Header::from_bytes(name, value).unwrap());
+                }
                 let _ = request.respond(response);
             }
         });
@@ -95,27 +98,55 @@ impl Drop for TestServer {
     }
 }
 
-/// The fixed routing table: `(status, body, content-type)`.
-fn route(method: &str, path: &str) -> (u16, String, &'static [u8]) {
-    let path = path.split('?').next().unwrap_or(path);
-    match (method, path) {
+type Route = (
+    u16,
+    String,
+    &'static [u8],
+    Vec<(&'static [u8], &'static [u8])>,
+);
+
+/// The fixed routing table: `(status, body, content-type, extra headers)`.
+fn route(request: &RecordedRequest) -> Route {
+    let path = request.path.split('?').next().unwrap_or(&request.path);
+    match (request.method.as_str(), path) {
         ("POST", "/auth/login") => (
             200,
             r#"{"access_token":"tok123","user":{"id":"u1"}}"#.to_string(),
             b"application/json",
+            vec![],
         ),
         (_, "/data") => (
             200,
             r#"{"name":"Q4 Launch","count":5,"active":true,"items":[1,2,3],"email":"user@example.com"}"#
                 .to_string(),
             b"application/json",
+            vec![],
         ),
-        (_, "/text") => (200, "just text".to_string(), b"text/plain"),
+        (_, "/text") => (200, "just text".to_string(), b"text/plain", vec![]),
+        (_, "/cookies/set") => (
+            200,
+            r#"{"ok":true}"#.to_string(),
+            b"application/json",
+            vec![(b"Set-Cookie", b"session=abc; Path=/")],
+        ),
+        (_, "/cookies/absent") => {
+            let status = if request.header("Cookie").is_none() {
+                200
+            } else {
+                409
+            };
+            (status, String::new(), b"application/json", vec![])
+        }
         (_, p) if p.starts_with("/status/") => {
             let code = p.trim_start_matches("/status/").parse().unwrap_or(200);
-            (code, String::new(), b"application/json")
+            (code, String::new(), b"application/json", vec![])
         }
-        _ => (200, r#"{"ok":true}"#.to_string(), b"application/json"),
+        _ => (
+            200,
+            r#"{"ok":true}"#.to_string(),
+            b"application/json",
+            vec![],
+        ),
     }
 }
 

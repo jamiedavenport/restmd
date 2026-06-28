@@ -196,6 +196,83 @@ fn set_directive_threads_a_downstream_variable() {
 }
 
 // ---------------------------------------------------------------------------
+// Cookie sessions
+// ---------------------------------------------------------------------------
+
+#[test]
+fn response_cookies_are_sent_to_later_matching_requests() {
+    let s = TestServer::start();
+    let body = "## GET /cookies/set\n\n\
+## GET /cookies/check\n\n\
+## GET /outside\n";
+    let report = run(&parse_doc(&format!("base: {}", s.base), body));
+    assert_eq!(report.exit_code(), 0);
+
+    let set_cookie_count = report.outcomes[0]
+        .response
+        .as_ref()
+        .unwrap()
+        .headers
+        .iter()
+        .filter(|(name, _)| name.eq_ignore_ascii_case("set-cookie"))
+        .count();
+    assert_eq!(set_cookie_count, 2);
+
+    let reqs = s.requests();
+    let matching = reqs[1].header("Cookie").expect("matching cookies");
+    assert!(matching.contains("session=abc"), "{matching}");
+    assert!(matching.contains("scoped=yes"), "{matching}");
+
+    let outside = reqs[2].header("Cookie").expect("root cookie");
+    assert!(outside.contains("session=abc"), "{outside}");
+    assert!(!outside.contains("scoped=yes"), "{outside}");
+}
+
+#[test]
+fn cookie_deletion_is_respected() {
+    let s = TestServer::start();
+    let body = "## GET /cookies/set\n\n\
+## GET /cookies/delete\n\n\
+## GET /cookies/check\n";
+    let report = run(&parse_doc(&format!("base: {}", s.base), body));
+    assert_eq!(report.exit_code(), 0);
+
+    let reqs = s.requests();
+    let final_cookie = reqs[2].header("Cookie").expect("scoped cookie remains");
+    assert!(final_cookie.contains("scoped=yes"), "{final_cookie}");
+    assert!(!final_cookie.contains("session="), "{final_cookie}");
+}
+
+#[test]
+fn explicit_cookie_header_overrides_the_session_store() {
+    let s = TestServer::start();
+    let body = "## GET /cookies/set\n\n\
+## GET /cookies/check\nCookie: manual=1\n";
+    let report = run(&parse_doc(&format!("base: {}", s.base), body));
+    assert_eq!(report.exit_code(), 0);
+
+    assert_eq!(s.requests()[1].header("Cookie"), Some("manual=1"));
+}
+
+#[test]
+fn run_through_threads_cookies_from_the_prefix() {
+    let s = TestServer::start();
+    let body = "## GET /cookies/set\n\n\
+## GET /cookies/check\n\n\
+## GET /outside\n";
+    let doc = parse_doc(&format!("base: {}", s.base), body);
+
+    let report = Runner::new(ReqwestTransport::new()).run_through(&doc, 1, &RunOptions::default());
+    assert_eq!(report.exit_code(), 0);
+    assert_eq!(report.outcomes.len(), 2);
+
+    let reqs = s.requests();
+    assert_eq!(reqs.len(), 2);
+    let cookie = reqs[1].header("Cookie").expect("cookie from prefix");
+    assert!(cookie.contains("session=abc"), "{cookie}");
+}
+
+// ---------------------------------------------------------------------------
 // Error paths
 // ---------------------------------------------------------------------------
 

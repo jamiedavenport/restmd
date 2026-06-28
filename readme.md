@@ -67,6 +67,12 @@ files run.
   heading. The earlier requests it depends on still run (so captures resolve),
   but only the selected one is reported.
 
+Responses that set cookies automatically feed those cookies into later
+requests in the same file run, following normal domain, path, expiry, and
+`Secure` rules. Cookie sessions are in memory only and reset for each file and
+each later TUI run. An explicit `Cookie` request header takes precedence over
+the session cookie store.
+
 ```sh
 restmd run demo/.restmd --env prod --format junit > results.xml
 restmd run demo/.restmd/users.md -r "POST /users" --var id=42

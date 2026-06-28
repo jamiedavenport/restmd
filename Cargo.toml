@@ -3,7 +3,7 @@ resolver = "3"
 members = ["crates/*"]
 
 [workspace.package]
-version = "0.5.0"
+version = "0.6.0"
 edition = "2024"
 license = "MIT"
 repository = "https://github.com/jamiedavenport/restmd"
@@ -16,7 +16,7 @@ thiserror = "2"
 uuid = { version = "1", features = ["v4"] }
 base64 = "0.22"
 time = { version = "0.3", features = ["formatting"] }
-reqwest = { version = "0.12", default-features = false, features = ["blocking", "rustls-tls", "http2"] }
+reqwest = { version = "0.12", default-features = false, features = ["blocking", "rustls-tls", "http2", "cookies"] }
 serde_json = "1"
 serde_json_path = "0.7"
 regex = "1"

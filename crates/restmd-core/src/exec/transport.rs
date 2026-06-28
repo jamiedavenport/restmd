@@ -46,6 +46,10 @@ pub trait HttpTransport {
 }
 
 /// Production transport backed by a blocking `reqwest` client.
+///
+/// Each transport owns an in-memory cookie store. Reuse one transport for the
+/// requests in a single session, and create a new transport for an independent
+/// document run.
 pub struct ReqwestTransport {
     client: reqwest::blocking::Client,
 }
@@ -53,7 +57,10 @@ pub struct ReqwestTransport {
 impl ReqwestTransport {
     pub fn new() -> Self {
         Self {
-            client: reqwest::blocking::Client::new(),
+            client: reqwest::blocking::Client::builder()
+                .cookie_store(true)
+                .build()
+                .expect("ReqwestTransport client"),
         }
     }
 }
